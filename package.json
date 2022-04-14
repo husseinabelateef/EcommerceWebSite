@@ -1,0 +1,27 @@
+{
+  "name": "ecommercewebsite-1",
+  "version": "1.0.0",
+  "description": "NodeJs Practice",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/husseinabelateef/EcommerceWebSite.git"
+  },
+  "keywords": [
+    "nodejs",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/husseinabelateef/EcommerceWebSite/issues"
+  },
+  "homepage": "https://github.com/husseinabelateef/EcommerceWebSite#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0"
+  }
+}
