@@ -17,6 +17,7 @@ mongoose.connect(process.env.CONNECTION_STRNG,()=>{
   app.use(express.json());
 
   app.use("/user" , users)
+  
 
   app.listen(3051, () => {
     console.log("app started listening on port 3051");

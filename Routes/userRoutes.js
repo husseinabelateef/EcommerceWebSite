@@ -59,6 +59,7 @@ router.patch("/:id", async (req, res, next) => {
     res.json(result);
   });
   router.delete("/:id" , async (req, res, next) => {
+    try{
     debugger;
     var { id } = req.params;
     var userId = auth.userFunc()
@@ -72,6 +73,10 @@ router.patch("/:id", async (req, res, next) => {
     console.log(result)
     res.json({message: result});
     }
+  }
+  catch(error){
+    res.status(401).json({message:"Not Autherized"});
+  }
   });
  
 

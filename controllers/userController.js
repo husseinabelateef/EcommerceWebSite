@@ -68,7 +68,7 @@ catch(error){
   }
   async function login({ userName, password }) {
     try{
-  var user = await userModel.findOne({"userName": userName});
+      var user = await userModel.findOne({"userName": userName});
   
     if (user) 
     {
