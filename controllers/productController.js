@@ -4,7 +4,6 @@ function GetAllProducts(){
     
     var products = productModel.find({});
     return products
-
 }
 
 function GetAllProductsWithID(id){
