@@ -4,11 +4,15 @@ const mongoose = require('mongoose')
 
 
 const OrderSchema = mongoose.Schema({
-    Products :[{
+    Products : [{
+        quentity:{
+            type : Number,
+            require:true},
+        ProductId:{
         type:mongoose.SchemaTypes.ObjectId,
         ref:'Product',
         require:true,
-    }], 
+    }}], 
     //Foreign KEY
     userId:{
         type:mongoose.SchemaTypes.ObjectId,

@@ -26,6 +26,6 @@ mongoose.connect(process.env.CONNECTION_STRNG,()=>{
   app.use("/user" , users)
   app.use("/product",products)
   app.use('/Sproduct',sellersproduct)
-  app.listen(3000, () => {
-    console.log("app started listening on port 3000");
+  app.listen(3050, () => {
+    console.log("app started listening on port 3050");
   });

@@ -9,58 +9,40 @@ router.use(auth.SellerCheck)
 debugger
 
 // To add new one product
-router.post('/:id',async (req,res,next)=>{
-  
-    var {id} = req.params
+router.post('/',async (req,res,next)=>
+{
     var sellerId=auth.userFunc()
-    debugger
-    if(id!=sellerId){
-        return res.status(401).json({message:"This Seller is not autherized to add new product"});
-    }
-    var body=req.body
+    var body = req.body
+    body.sellerId = sellerId
     var addedproduct = await insertProduct(body)
      res.json(addedproduct)
 })
 
  //To see his own products only
-router.get("/:id",async (req,res,next)=>{
-    var {id}=req.params
+router.get("/",async (req,res,next)=>{
+
     var sellerId = auth.userFunc()
-   
-    if(id!=sellerId){
-        debugger
-        return res.status(401).json({message:"This Seller is not autherized to see new product"});
-    }
-    var products= await GetAllProductsWithID(id)
+    var products= await GetAllProductsWithID(sellerId)
     res.json(products)
 })
 
-// To edit his own product only 
+// To edit his own product only and specific Product with id  
 
 router.patch('/:id',async (req, res, next)=>{
 
     // seller ID
     var {id} = req.params
-    var sellerId = auth.userFunc()
+    
     var productbody = req.body
-    if(id!=sellerId){
-        debugger
-        return res.status(401).json({message:"This Seller is not autherized to edit this product"});
-    }
-    var NewProduct = await updateProduct(productbody)
+    // update in product Controller to take two paramters
+    var NewProduct = await updateProduct(id,productbody)
     res.json(NewProduct)
 })
 
 router.delete('/:id',async(req,res,next)=>{
 
-    var{id}=req.params
-    var {pId}=req.params
-    var sellerId=auth.userFunc()
-    if(id!=sellerId){
-        return res.status(401).json({message:"This Seller is not autherized to delete this product"});
-    }
-     var productbody = req.body
-    var deletedPro = await deleteProduct(productbody)
+    var {id} = req.params
+    var deletedPro = await deleteProduct(id)
     debugger
     res.json(deletedPro)
     

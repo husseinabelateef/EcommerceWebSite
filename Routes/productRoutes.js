@@ -1,19 +1,30 @@
 const express = require('express')
-
+const auth = require('../MiddleWare/auth')
 var router = express.Router()
 
-const{GetAllProducts,GetOneProduct,insertProduct,updateProduct,deleteProduct, GetAllProductsLike} =
+const{GetAllProducts,GetSellerProducts,GetOneProduct,GetAllProductsLike} =
 require('../controllers/productController')
- 
+const {createOrder} = require('../controllers/orderController')
+router.post("/order/",async (req,res,next)=>{
+    debugger
+    var ordercreate = req.body
+   var order = await createOrder(ordercreate)
+   console.log("----from Routes----")
+   console.log(order)
+    res.json(order)
+})
+//Anonumous User Get All Products"See Products"
 router.get("/",async (req,res,next)=>{
     var products= await GetAllProducts()
     res.json(products)
 })
 
-router.get('/:name',async (req,res,next)=>{
+router.use(auth.userCheck)
+//Regestered User search by seller Name
+router.get('/:sellername',async (req,res,next)=>{
 
-    var {name}=req.params
-    var product = await GetOneProduct(name)
+    var {sellername}=req.params
+    var product = await GetSellerProducts(sellername)
     res.json(product)
 
 })

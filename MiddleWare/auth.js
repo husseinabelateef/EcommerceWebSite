@@ -10,9 +10,10 @@ const userCheck = (req, res, next) => {
     jwt.verify(authorization, 
       process.env.secretKey, 
       function (err, decoded) 
-      {
+      {debugger;
           if(decoded.role == "User")
           {
+            debugger;
             currentUserId = decoded._id
             next();
           } 

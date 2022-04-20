@@ -1,4 +1,5 @@
 const productModel = require("../Models/products")
+const auth = require('../MiddleWare/auth')
 
 function GetAllProducts(){
     
@@ -20,35 +21,53 @@ function GetOneProduct(name){
     var product = productModel.findOne({name:name})
     return product
 }
-
+async function GetSellerProducts(sellerName){
+    debugger; 
+    var products = await productModel.find({}).populate({path :'sellerId', select :'userName', 
+    match: { userName: sellerName }})  
+    var result =  products.filter(x=> x.sellerId!= null) 
+    return result
+}
 function insertProduct(product){
 
     var newproduct= productModel.create(product)
     return newproduct
 }
 
-function updateProduct(product){
-
-    var id=product._id
-    var newProduct =productModel.findOneAndUpdate({_id:id},{
+async function updateProduct(pid , product)
+{
+    var id = pid
+    var currentSellerId = auth.userFunc()
+    var pro = await productModel.findOne({_id:id})
+    if(pro.sellerId == currentSellerId){
+    var newProduct = await productModel.findOneAndUpdate({_id:id},{
         name:product.name,
         description:product.description,
         photo:product.photo,
-        creationData:product.creationData
+        creationData:product.creationData,
+        quantity:product.quantity
         
     },{
         new:true
     })
     return newProduct
 }
-
-function deleteProduct(product){
-    
-    var id =product._id
-    var deletedProduct = productModel.deleteOne({_id:id})
-
-    return deletedProduct
+else 
+return {"message":"Not Authorized"}
     
 }
 
-module.exports={GetAllProducts,GetOneProduct,insertProduct,updateProduct,deleteProduct,GetAllProductsLike,GetAllProductsWithID}
+async function deleteProduct(pid){
+    var currentSellerId = auth.userFunc()
+    var pro = await productModel.findOne({_id:pid})
+    if(pro.sellerId == currentSellerId){
+    var deletedProduct = await productModel.deleteOne({_id:pid})
+
+    return deletedProduct
+    }
+    else
+    return {"message":"Not Authorized"}
+    
+}
+
+module.exports={GetSellerProducts ,GetAllProducts,GetOneProduct,insertProduct,updateProduct,deleteProduct,GetAllProductsLike,GetAllProductsWithID}
