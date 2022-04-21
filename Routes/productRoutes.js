@@ -4,15 +4,15 @@ var router = express.Router()
 
 const{GetAllProducts,GetSellerProducts,GetOneProduct,GetAllProductsLike} =
 require('../controllers/productController')
-const {createOrder} = require('../controllers/orderController')
-router.post("/order/",async (req,res,next)=>{
-    debugger
-    var ordercreate = req.body
-   var order = await createOrder(ordercreate)
-   console.log("----Final Response Here----")
-   console.log(order)
-    res.json(order)
-})
+// const {createOrder} = require('../controllers/orderController')
+// router.post("/order/",async (req,res,next)=>{
+//     debugger
+//     var ordercreate = req.body
+//    var order = await createOrder(ordercreate)
+//    console.log("----Final Response Here----")
+//    console.log(order)
+//     res.json(order)
+// })
 //Anonumous User Get All Products"See Products"
 router.get("/",async (req,res,next)=>{
     var products= await GetAllProducts()

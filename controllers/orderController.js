@@ -6,7 +6,7 @@ async function createOrder(order)
     console.log("order comming from request body here")
     console.log(order)
     var flag = true
-    var currentUser = auth.userFunc()
+    var currentUserId = auth.userFunc()
     console.log("products comming from request body here")
     console.log(order.Products)
     var lisProduct  = await productModel.find({ }).exec();
@@ -35,6 +35,7 @@ if(flag)
             }
         })
     })
+    order.userId=currentUserId;
     var newOrder= await OrderModel.create(order)
     console.log("After creation order here")
     console.log(newOrder)
