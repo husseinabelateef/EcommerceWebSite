@@ -1,6 +1,7 @@
 const OrderModel = require("../Models/order")
 const productModel = require("../Models/products")
 const auth = require('../MiddleWare/auth')
+const{updateProduct} = require('../controllers/productController')
 async function createOrder(order)
 {debugger
     console.log("order comming from request body here")
@@ -27,10 +28,23 @@ async function createOrder(order)
 if(flag)
 {debugger
      order.Products.forEach(x=>{
-        lisProduct.forEach(y=>{
+        lisProduct.forEach(async (y)=>{
             if(x.ProductId == y._id){
                 {
-                    y.quantity -x.quentity 
+                    debugger; 
+                    var updatedPro = y
+                    console.log(x.ProductId.toString())
+                    updatedPro.quantity -= x.quentity
+                    var newProduct = await productModel.findOneAndUpdate({_id:y._id},{
+                        name:updatedPro.name,
+                        description:updatedPro.description,
+                        photo:updatedPro.photo,
+                        creationData:updatedPro.creationData,
+                        quantity:updatedPro.quantity
+                        
+                    })
+                    // await updateProduct(x.ProductId.toString() , updatedPro);
+                    
                 }
             }
         })
